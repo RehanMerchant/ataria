@@ -1,0 +1,117 @@
+/* 1. Import Fonts FIRST (Must be at the very top of the file) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+/* 2. Import Tailwind (v4 syntax) */
+@import "tailwindcss";
+
+/* --- 3. Define Theme Colors & Style Variables --- */
+@theme {
+  /* --- A. TYPOGRAPHY (Loaded in base layer) --- */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Fira Code", ui-monospace, SFMono-Regular, monospace;
+
+  /* --- B. COLOR PALETTE: BLACK & GREY Dashboard Base --- */
+  /* Main app and terminal card backgrounds */
+  --color-background: #0A0A0C; /* Main window background */
+  --color-foreground: #FFFFFF; /* High contrast white text */
+  --color-foreground-muted: #A0A0A2; /* Date, meta info, subtler text */
+  --color-foreground-label: #707072; /* Key/Stat labels (e.g., 'Open', 'High') */
+  --color-background-lable: #1e1e21;
+
+  /* Surface and divider colors */
+  --color-surface: #141416; /* Stat card and section backgrounds */
+  --color-surface-border: #28282A; /* Card borders and divider lines */
+
+  /* --- C. COLOR PALETTE: SEMANTIC & ACTION COLORS --- */
+  /* Action: BLUE (Used for BUY / BIDS) */
+  --color-accent-blue: #1E88E5; /* Buy button, Bids header */
+  --color-accent-blue-hover: #1976D2;
+  --color-accent-blue-light: rgba(30, 136, 229, 0.1); /* Subtle blue row hover */
+
+  /* Action: RED (Used for SELL / OFFERS / Negative Large Price) */
+  --color-accent-red: #EC4034; /* Sell button, Offers header, large negative numbers */
+  --color-accent-red-hover: #D32F2F;
+  --color-accent-red-light: rgba(236, 64, 52, 0.1); /* Subtle red row hover */
+
+  /* Semantic Status (Used for Indicators and data text) */
+  --color-success: #1CB36C; /* Data Active Dot, positive price numbers */
+  --color-error: #EC4034; /* Reuse Red for errors / current down value */
+
+  /* --- D. SPACING & SIZING (Dashboard essentials) --- */
+  --spacing-18: 4.5rem;
+  --spacing-112: 28rem;
+  --spacing-128: 32rem;
+
+  /* --- E. BORDERS & SHADOWS --- */
+  --radius-xl: 0.75rem; /* For key statistic cards */
+  --radius-2xl: 1rem; /* For main terminal application card */
+  
+  --shadow-soft: 0 4px 15px -2px rgba(0, 0, 0, 0.15); /* Subtle but solid shadow */
+  --shadow-glow: 0 0 10px rgba(30, 136, 229, 0.35); /* Subtle Blue indicator glow */
+
+  /* --- F. CUSTOM ANIMATIONS --- */
+  --animate-fade-in: fade-in 0.3s ease-in-out;
+  --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes slide-up {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+}
+
+/* 4. Base styles */
+@layer base {
+  /* Force dark mode root for this specific dashboard look */
+  :root {
+    --background: #0A0A0C;
+    --foreground: #FFFFFF;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-weight: 400; /* Establishes standard normal weight baseline */
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* 5. Component styles */
+@layer components {
+  .btn {
+    @apply flex items-center justify-center px-6 py-2 bg-accent-blue text-foreground rounded-sm transition-colors hover:bg-accent-blue-hover shadow-soft active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply flex items-center justify-center px-6 py-2 bg-transparent text-foreground border border-surface-border rounded-sm transition-colors hover:bg-white/10 hover:text-white shadow-none active:scale-95 duration-200;
+  }
+}
+
+/* 6. Utility Animations */
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-in {
+  animation: enter 0.2s ease-out forwards;
+}
+
+.fade-in {
+  animation: fade-in 0.2s ease-out forwards;
+}
